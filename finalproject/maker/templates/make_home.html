@@ -6,14 +6,11 @@
 
 <h1> Question Bank Home </h1>
     <div>
-        <a href="{% url 'maker:multiple_choice' %}" class="button">Create a Multiple Choice Question</a>
-    </div>
-
-    <div>
-        <a href="{% url 'maker:true_false' %}" class="button">Create True False Question</a>
+        <a href="{% url 'maker:multiple_choice' %}" class="btn btn-primary" role="button">Create a Multiple Choice Question</a>
+        <a href="{% url 'maker:true_false' %}" class="btn btn-primary" role="button">Create True False Question</a>
     </div>
 
 <h4> List of created questions: </h4>
 
-    <a href="{% url 'home' %}" class="button">Home</a>
+    <a href="{% url 'home' %}" class="btn btn-primary" role="button">Home</a>
 {% endblock %}

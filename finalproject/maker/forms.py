@@ -1,6 +1,7 @@
 from django import forms
 
-class MakeMultipleChoiceQuestionForm(forms.Form):
+
+class MakeMultipleChoiceQuestionForm(forms.ModelForm):
 
     choices = (
         ('choice_1', 'Answer 1'),
@@ -10,7 +11,8 @@ class MakeMultipleChoiceQuestionForm(forms.Form):
     )
 
     title = forms.CharField(max_length=256)
-    questions = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
+    questions = forms.ChoiceField(choices=choices, widget=forms.CheckboxSelectMultiple)
+    image = forms.ImageField()
 
 
 class MakeTrueFalseQuestionForm(forms.Form):
@@ -20,4 +22,5 @@ class MakeTrueFalseQuestionForm(forms.Form):
     )
 
     title = forms.CharField(max_length=256)
-    questions = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
+    questions = forms.ChoiceField(choices=choices, widget=forms.CheckboxSelectMultiple)
+    image = forms.ImageField()
