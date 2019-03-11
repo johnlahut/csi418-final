@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} Question Bank Home {% endblock %}
+
+{% block content %}
+
+<h1> Question Bank Home </h1>
+    <div>
+        <a href="{% url 'maker:multiple_choice' %}" class="button">Create a Multiple Choice Question</a>
+    </div>
+
+    <div>
+        <a href="{% url 'maker:true_false' %}" class="button">Create True False Question</a>
+    </div>
+
+<h4> List of created questions: </h4>
+
+    <a href="{% url 'home' %}" class="button">Home</a>
+{% endblock %}

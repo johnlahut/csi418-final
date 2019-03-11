@@ -1,0 +1,12 @@
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+venv/
+.idea/
+finalproject/finalproject/__pycache__/
+finalproject/maker/__pycache__/
+finalproject/maker/migrations/__pycache__/
+finalproject/testtaker/__pycache__/
+finalproject/testtaker/migrations/
