@@ -12,5 +12,12 @@
 
 <h4> List of created questions: </h4>
 
+    {% if q %}
+        {% for question in q %}
+            {{ question.question  }}<br>
+        {% endfor %}
+    {% endif %}
+
     <a href="{% url 'home' %}" class="btn btn-primary" role="button">Home</a>
+
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from .forms import MakeMultipleChoiceQuestionForm, MakeTrueFalseQuestionForm
+from .models import QuestionModel
 
 # Create your views here.
 
@@ -26,9 +27,8 @@ def make_true_false_question_view(request):
 
 def make_home_view(request):
 
-
-
-    return render(request, 'make_home.html')
+    q = QuestionModel.objects.all()
+    return render(request, 'make_home.html', {'q': q})
 
 def multiple_choice_preview_view(request):
     return render(request, 'view_multiple_choice.html')

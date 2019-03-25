@@ -13,13 +13,15 @@ class MakeMultipleChoiceQuestionForm(forms.ModelForm):
 
     class Meta:
         model = models.QuestionModel
-        fields = ['question', 'choice_1', 'choice_2', 'choice_3', 'choice_4', 'image', 'category']
+        fields = ['question', 'choice_1', 'choice_2', 'choice_3', 'choice_4', 'choice_5', 'choice_6', 'image', 'category']
 
     choices = (
         (1, 'Answer 1'),
         (2, 'Answer 2'),
         (3, 'Answer 3'),
-        (4, 'Answer 4')
+        (4, 'Answer 4'),
+        (5, 'Answer 5'),
+        (6, 'Answer 6')
     )
 
     answer = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
