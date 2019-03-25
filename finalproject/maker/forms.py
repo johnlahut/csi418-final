@@ -1,26 +1,43 @@
 from django import forms
+from . import models
+class QuestionForm(forms.Form):
+    title = forms.CharField(max_length=256)
+    image = forms.ImageField()
 
 
 class MakeMultipleChoiceQuestionForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(MakeMultipleChoiceQuestionForm, self).__init__(*args, **kwargs)
+        self.fields['image'].required = False
+
+    class Meta:
+        model = models.QuestionModel
+        fields = ['question', 'choice_1', 'choice_2', 'choice_3', 'choice_4', 'image', 'category']
+
     choices = (
-        ('choice_1', 'Answer 1'),
-        ('choice_2', 'Answer 2'),
-        ('choice_3', 'Answer 3'),
-        ('choice_4', 'Answer 4')
+        (1, 'Answer 1'),
+        (2, 'Answer 2'),
+        (3, 'Answer 3'),
+        (4, 'Answer 4')
     )
 
-    title = forms.CharField(max_length=256)
-    questions = forms.ChoiceField(choices=choices, widget=forms.CheckboxSelectMultiple)
-    image = forms.ImageField()
+    answer = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 
 
-class MakeTrueFalseQuestionForm(forms.Form):
+class MakeTrueFalseQuestionForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(MakeTrueFalseQuestionForm, self).__init__(*args, **kwargs)
+        self.fields['image'].required = False
+
+    class Meta:
+        model = models.QuestionModel
+        fields = ['question', 'image', 'category']
+
     choices = (
-        ('choice_1', 'False'),
-        ('choice_2', 'True')
+        (1, 'True'),
+        (2, 'False')
     )
 
-    title = forms.CharField(max_length=256)
-    questions = forms.ChoiceField(choices=choices, widget=forms.CheckboxSelectMultiple)
-    image = forms.ImageField()
+    answer = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)

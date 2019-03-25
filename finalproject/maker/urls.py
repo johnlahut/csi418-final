@@ -21,5 +21,6 @@ app_name = 'maker'
 urlpatterns = [
     path('', views.make_home_view, name='home'),
     path('mc/', views.make_mulitple_choice_question_view, name='multiple_choice'),
-    path('tf/', views.make_true_false_question_view, name='true_false')
+    path('tf/', views.make_true_false_question_view, name='true_false'),
+    path('preview/', views.multiple_choice_preview_view, name='multiple_choice_preview')
 ]

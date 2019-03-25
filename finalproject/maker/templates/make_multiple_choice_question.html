@@ -6,6 +6,12 @@
 
 <h4>Multiple Choice Question</h4>
 
+    {% if form.errors %}
+        {% for error in form.errors %}
+            {{ error }}
+        {% endfor %}
+    {% endif %}
+
 <form action="." method="post">
     {% csrf_token %}
     {{ form.as_p }}
@@ -13,6 +19,6 @@
 </form>
 
 <a href="{% url 'maker:home' %}" class="btn btn-primary" role="button">Test Bank Home</a>
-<a href="#" class="btn btn-primary" role="button">Preview</a>
+<a href="{% url 'maker:multiple_choice_preview' %}" class="btn btn-primary" role="button">Preview</a>
 
 {% endblock %}

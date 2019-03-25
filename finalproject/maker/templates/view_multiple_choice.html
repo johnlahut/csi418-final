@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="col-8">
+
+    <div class="col-2">
+        <p class="h5">Question 14:</p>
+    </div>
+
+    <div class="col-10 ml-5">
+        <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Est ultricies integer quis auctor. Dolor morbi non arcu risus quis varius quam quisque id. Fermentum iaculis eu non diam phasellus vestibulum lorem sed. Volutpat blandit aliquam etiam erat velit scelerisque in.</p>
+    </div>
+
+    <div class="text-center">
+        <figure class="figure">
+            <img src="{% static 'img/graph.png' %}" class="figure-img img-fluid rounded" alt="...">
+            <figcaption class="figure-caption text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</figcaption>
+        </figure>
+    </div>
+
+
+    <div class="form-row">
+        <div class="col-6">
+            <input type="radio" id="choice_1">
+            <label class="custom-radio" for="choice_1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</label>
+        </div>
+        <div class="col-5">
+            <input type="radio" id="choice_2">
+            <label class="custom-radio" for="choice_2">Felis bibendum ut tristique et egestas quis ipsum.</label>
+        </div>
+    </div>
+
+
+    <div class="form-row">
+        <div class="col-6">
+            <input type="radio" id="choice_3">
+            <label class="custom-radio" for="choice_3">Tincidunt tortor aliquam nulla facilisi cras fermentum odio eu.</label>
+        </div>
+
+        <div class="col-4">
+            <input type="radio" id="choice_4">
+            <label class="custom-radio" for="choice_4">Adipiscing vitae proin sagittis nisl rhoncus mattis rhoncus. Suspendisse potenti nullam ac tortor vitae purus faucibus ornare.</label>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
