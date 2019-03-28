@@ -10,6 +10,8 @@ class MakeMultipleChoiceQuestionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(MakeMultipleChoiceQuestionForm, self).__init__(*args, **kwargs)
         self.fields['image'].required = False
+        self.fields['choice_1'].initial = ''
+        self.fields['choice_2'].initial = ''
 
     class Meta:
         model = models.QuestionModel
