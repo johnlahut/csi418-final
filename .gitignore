@@ -10,3 +10,4 @@ finalproject/maker/__pycache__/
 finalproject/maker/migrations/__pycache__/
 finalproject/testtaker/__pycache__/
 finalproject/testtaker/migrations/
+*.sqlite3
