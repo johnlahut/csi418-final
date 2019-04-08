@@ -3,12 +3,15 @@ from django.db import models
 
 # Create your models here.
 
+
 class QuestionCategory(models.Model):
+
     id = models.IntegerField(primary_key=True, auto_created=True)
     name = models.CharField(max_length=256)
 
     def __str__(self):
         return self.name
+
 
 class QuestionModel(models.Model):
 
@@ -23,3 +26,13 @@ class QuestionModel(models.Model):
     choice_6 = models.CharField(max_length=256, null=True, default=None)
     image = models.ImageField(default=None)
     category = models.ForeignKey(QuestionCategory, default=1, on_delete=models.CASCADE)
+
+
+class Test(models.Model):
+
+    testID = models.IntegerField(primary_key=True, auto_created=True)
+    question = models.ManyToManyField(QuestionModel)
+    createdDate = models.DateField()
+
+
+
