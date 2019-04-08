@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Test Building Page{% endblock %}
+{% block content %}
+Test Building Page
+{% if form.errors %}
+{% for error in form.errors %}
+{{ error }}
+{% endfor %}
+{% endif %}
+{% csrf_token %}
+{{ form.as_p }}
+Test Bank Home Preview
+{% endblock %}
