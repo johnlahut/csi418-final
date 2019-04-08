@@ -1,6 +1,9 @@
 from django import forms
 from . import models
+
+
 class QuestionForm(forms.Form):
+
     title = forms.CharField(max_length=256)
     image = forms.ImageField()
 
@@ -45,3 +48,17 @@ class MakeTrueFalseQuestionForm(forms.ModelForm):
     )
 
     answer = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
+
+
+class MakeTestForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(MakeTestForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = models.Test
+        fields = ['question']
+
+
+
+

@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %} Question Bank Home {% endblock %}
 
 {% block content %}
+
+<script src="{% static 'js/deleteModal.js' %}"></script>
 
 <div class="row m-2">
     <div class="col-6">
@@ -39,7 +43,36 @@
                             {% else %}
                                 <td><a href="{% url 'maker:multiple_choice_edit' id=question.id %}">Edit</a></td>
                             {% endif %}
-                            <td><a href="{% url 'maker:delete_question' id=question.id %}">Delete</a></td>
+                            <td> <button type="button" data-toggle="modal" data-target="#delete_question_popup" data-id={{question.id}} class="btn btn-outline-secondary no-bbrr" onclick="deleteButton('{{question.id}}', '{% url 'maker:delete_question' id=0 %}')"><span class="oi oi-pencil"></span>Delete</button></td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row m-2">
+    <div class="col-6">
+        <h4> List of created tests: </h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">Test Title</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if t %}
+                    {% for test in t %}
+                        <tr>
+                            <th scope="row">{{ test.id }}</th>
+                            <td>{{ test.test }}</td>
+                            <td>{{ test.id }}</td>
+
                         </tr>
                     {% endfor %}
                 {% endif %}
@@ -49,5 +82,25 @@
 </div>
 
     <a href="{% url 'home' %}" class="btn btn-primary" role="button">Home</a>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Delete Confirmation</h4>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to permanently delete this question? </p>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <a role="button" href="#" class="btn btn-danger" id="finalDelete">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
