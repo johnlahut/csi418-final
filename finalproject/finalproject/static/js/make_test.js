@@ -1,4 +1,5 @@
 let count = 1;
+let questions = [];
 
 $(document).ready(function() {
     $('#questionTable').DataTable({
@@ -31,7 +32,8 @@ function addQuestion(button) {
 
 function renderQuestion(data) {
 
-    console.log(data);
+    if (questions.indexOf(data['id']) >= 0)
+        return;
 
     parent = $('#test-preview');
 
@@ -51,28 +53,29 @@ function renderQuestion(data) {
         </figure>
     </div>
 
-
-    <div class="row">
-        <div class="col-6">
-            <input type="radio" id="choice_1">
-            <label class="custom-radio" for="choice_1">${data['choice_1']}</label>
+    <div class="custom-control custom-radio">
+        <div class="row">
+            <div class="col-6">
+                <input class="custom-control-input" type="radio" id="choice_1">
+                <label class="custom-control-label" for="choice_1">${data['choice_1']}</label>
+            </div>
+            <div class="col-6">
+                <input class="custom-control-input" type="radio" id="choice_2">
+                <label class="custom-control-label" for="choice_2">${data['choice_2']}</label>
+            </div>
         </div>
-        <div class="col-6">
-            <input type="radio" id="choice_2">
-            <label class="custom-radio" for="choice_2">${data['choice_2']}</label>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-6">
-            <input type="radio" id="choice_3">
-            <label class="custom-radio" for="choice_3">${data['choice_3']}</label>
-        </div>
-
-        <div class="col-6">
-            <input type="radio" id="choice_4">
-            <label class="custom-radio" for="choice_4">${data['choice_4']}</label>
+    
+    
+        <div class="row">
+            <div class="col-6">
+                <input class="custom-control-input" type="radio" id="choice_3">
+                <label class="custom-control-label" for="choice_3">${data['choice_3']}</label>
+            </div>
+    
+            <div class="col-6">
+                <input class="custom-control-input" type="radio" id="choice_4">
+                <label class="custom-control-label" for="choice_4">${data['choice_4']}</label>
+            </div>
         </div>
     </div>
     <hr>
@@ -80,5 +83,10 @@ function renderQuestion(data) {
 
     count++;
     parent.append(html);
+    questions.push(data['id']);
+}
+
+function createTest(csrf) {
+
 }
 
