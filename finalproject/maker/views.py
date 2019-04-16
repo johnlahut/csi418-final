@@ -1,8 +1,12 @@
+from django.views.decorators.http import require_GET
 from django.shortcuts import render, reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.core import serializers
 
 from .forms import MakeMultipleChoiceQuestionForm, MakeTrueFalseQuestionForm, MakeTestForm
-from .models import QuestionModel, Test
+from .models import QuestionModel, Test, QuestionCategory
+
+import json
 
 # Create your views here.
 
@@ -93,13 +97,21 @@ def multiple_choice_preview_view(request):
 
 def make_test_view(request):
 
-    if request.method == 'POST':
-        form = MakeTestForm(request.POST)
+    q = QuestionModel.objects.all()
 
-        if form.is_valid():
-            test = form.cleaned_data
-            test.save()
 
-    test = MakeTestForm()
+    return render(request, 'make_test.html', {'q': q})
 
-    return render(request, 'make_test.html', {'form': test})
+@require_GET
+def get_question(request, id):
+    # serialize requires iterator even though get returns a single object always
+    # serializer returns an array but we always will return a single question, so return dict instead
+    q = json.loads(serializers.serialize('json', [QuestionModel.objects.get(id=id)]))[0]
+
+    # look up category to return as string, and return all the fields of the model
+    q['fields']['category'] = QuestionCategory.objects.get(id=q['fields']['category']).name
+    q['fields']['id'] = q['pk']
+    return JsonResponse(q['fields'])
+
+# @require_GET
+# def render_question(request, id):

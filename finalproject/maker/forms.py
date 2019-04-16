@@ -15,6 +15,8 @@ class MakeMultipleChoiceQuestionForm(forms.ModelForm):
         self.fields['image'].required = False
         self.fields['choice_1'].initial = ''
         self.fields['choice_2'].initial = ''
+        self.fields['choice_5'].required = False
+        self.fields['choice_6'].required = False
 
     class Meta:
         model = models.QuestionModel

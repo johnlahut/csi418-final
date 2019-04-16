@@ -27,12 +27,26 @@ class QuestionModel(models.Model):
     image = models.ImageField(default=None)
     category = models.ForeignKey(QuestionCategory, default=1, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.question
+
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'question': self.question,
+    #         'answer': self.answer,
+    #         'choices':
+    #     }
+
 
 class Test(models.Model):
 
     testID = models.IntegerField(primary_key=True, auto_created=True)
     question = models.ManyToManyField(QuestionModel)
     createdDate = models.DateField()
+    name = models.CharField(max_length=256, default=None)
 
+    def __str__(self):
+        return self.name
 
 

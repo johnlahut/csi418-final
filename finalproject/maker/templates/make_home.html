@@ -14,6 +14,7 @@
         <div class="m-4">
             <a href="{% url 'maker:multiple_choice' %}" class="btn btn-primary" role="button">Create a Multiple Choice Question</a>
             <a href="{% url 'maker:true_false' %}" class="btn btn-primary" role="button">Create True False Question</a>
+            <a href="{% url 'maker:make_test'%}" class="btn btn-primary" role="button">Create Test</a>
         </div>
     </div>
 </div>
@@ -41,9 +42,13 @@
                             {% if question.choice_3 == None %}
                                 <td><a href="{% url 'maker:true_false_edit' id=question.id %}">Edit</a></td>
                             {% else %}
-                                <td><a href="{% url 'maker:multiple_choice_edit' id=question.id %}">Edit</a></td>
+                                <td>
+                                    <a role="button" class="btn btn-outline-primary" href="{% url 'maker:multiple_choice_edit' id=question.id %}">Edit</a>
+                                </td>
                             {% endif %}
-                            <td> <button type="button" data-toggle="modal" data-target="#delete_question_popup" data-id={{question.id}} class="btn btn-outline-secondary no-bbrr" onclick="deleteButton('{{question.id}}', '{% url 'maker:delete_question' id=0 %}')"><span class="oi oi-pencil"></span>Delete</button></td>
+                            <td>
+                                <button type="button" data-toggle="modal" data-target="#delete_question_popup" data-id={{question.id}} class="btn btn-outline-secondary no-bbrr" onclick="deleteButton('{{question.id}}', '{% url 'maker:delete_question' id=0 %}')"><span class="oi oi-pencil"></span>Delete</button>
+                            </td>
                         </tr>
                     {% endfor %}
                 {% endif %}
