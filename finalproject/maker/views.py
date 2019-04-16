@@ -1,10 +1,10 @@
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import render, reverse
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core import serializers
 
 from .forms import MakeMultipleChoiceQuestionForm, MakeTrueFalseQuestionForm, MakeTestForm
-from .models import QuestionModel, Test, QuestionCategory
+from .models import QuestionModel, QuestionCategory, Test
 
 import json
 
@@ -113,5 +113,20 @@ def get_question(request, id):
     q['fields']['id'] = q['pk']
     return JsonResponse(q['fields'])
 
-# @require_GET
-# def render_question(request, id):
+@require_POST
+def make_test(request):
+
+    q_ids = json.loads(request.POST.get('questions'))
+    name = request.POST.get('name')
+
+    questions = QuestionModel.objects.filter(id__in=q_ids)
+
+    # error says ID is not getting set, but it saves into the DB with a value
+    # and auto populate is set to true on id
+
+    test = Test(name=name)
+    test.save()
+    test.question.set(questions)
+    test.save()
+
+    return HttpResponse('Success')

@@ -47,7 +47,7 @@ function renderQuestion(data) {
 
     html = `
     <div id="${htmlId}">
-        <div class="col-10">
+        <div class="col-12">
             <div class="row">
                 <div class="col-auto mr-auto">
                     <p class="h5">Question ${count}:</p>
@@ -95,8 +95,9 @@ function renderQuestion(data) {
                 </div>
             </div>
         </div>
+        <hr>
     </div>
-    <hr>
+    
     `;
 
     count++;                            // increment question count for display
@@ -106,6 +107,22 @@ function renderQuestion(data) {
 }
 
 function createTest(csrf) {
+
+    // data = new FormData();
+    // data.append('questions', questions);
+    console.log(questions);
+    $.ajax({
+        url: '../make_test/',
+        type: 'POST',
+        data: {
+            'csrfmiddlewaretoken': csrf,
+            'questions': JSON.stringify(questions),
+            'name': $('#test-name').val()
+        },
+        success: function f(data) {
+            console.log(data);
+        }
+    });
 
 }
 

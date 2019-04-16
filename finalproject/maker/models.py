@@ -30,20 +30,12 @@ class QuestionModel(models.Model):
     def __str__(self):
         return self.question
 
-    # def to_dict(self):
-    #     return {
-    #         'id': self.id,
-    #         'question': self.question,
-    #         'answer': self.answer,
-    #         'choices':
-    #     }
-
 
 class Test(models.Model):
 
-    testID = models.IntegerField(primary_key=True, auto_created=True)
+    id = models.IntegerField(primary_key=True, auto_created=True)
     question = models.ManyToManyField(QuestionModel)
-    createdDate = models.DateField()
+    createdDate = models.DateField(auto_now_add=True)
     name = models.CharField(max_length=256, default=None)
 
     def __str__(self):
