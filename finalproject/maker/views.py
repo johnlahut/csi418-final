@@ -101,7 +101,6 @@ def delete_popup(request, id):
 def make_home_view(request):
 
     t = TestModel.objects.all()
-
     q = QuestionModel.objects.all()
 
     return render(request, 'make_home.html', context =  {'q': q, 't': t})
