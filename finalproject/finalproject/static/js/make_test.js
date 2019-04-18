@@ -120,7 +120,7 @@ function createTest(csrf) {
             'name': $('#test-name').val()
         },
         success: function f() {
-            console.log('Success!');
+
         }
     });
 

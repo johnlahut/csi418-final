@@ -1,5 +1,5 @@
 from django.views.decorators.http import require_GET, require_POST
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core import serializers
 
@@ -14,7 +14,14 @@ import json
 def make_mulitple_choice_question_view(request, id=None):
 
     if request.method == 'POST':
-        form = MakeMultipleChoiceQuestionForm(request.POST)
+
+        # check to see if we are editing an existing model
+        if id:
+            form = MakeMultipleChoiceQuestionForm(request.POST, instance=QuestionModel.objects.get(id=id))
+
+        # new
+        else:
+            form = MakeMultipleChoiceQuestionForm(request.POST)
 
         if form.is_valid():
 
@@ -25,13 +32,15 @@ def make_mulitple_choice_question_view(request, id=None):
 
             return HttpResponseRedirect(reverse('maker:home'))
 
+
     else:
         form = MakeMultipleChoiceQuestionForm()
 
-        # trying to look up a specific question
+        # render form with fields if editing a model
         if id is not None:
             question = QuestionModel.objects.get(id=id)
             form.fields['question'].initial = question.question
+            form.fields['answer'].initial = question.answer
             form.fields['choice_1'].initial = question.choice_1
             form.fields['choice_2'].initial = question.choice_2
             form.fields['choice_3'].initial = question.choice_3
@@ -39,13 +48,19 @@ def make_mulitple_choice_question_view(request, id=None):
             form.fields['choice_5'].initial = question.choice_5
             form.fields['choice_6'].initial = question.choice_6
 
+
     return render(request, 'make_multiple_choice_question.html', {'form': form})
 
 
 def make_true_false_question_view(request, id=None):
 
     if request.method == 'POST':
-        form = MakeTrueFalseQuestionForm(request.POST)
+
+        # check to see if we are editing an existing model
+        if id:
+            form = MakeTrueFalseQuestionForm(request.POST, instance=QuestionModel.objects.get(id=id))
+        else:
+            form = MakeTrueFalseQuestionForm(request.POST)
 
         if form.is_valid():
 
@@ -59,9 +74,11 @@ def make_true_false_question_view(request, id=None):
     else:
         form = MakeTrueFalseQuestionForm()
 
+        # edit an existing model
         if id is not None:
             question = QuestionModel.objects.get(id=id)
             form.fields['question'].initial = question.question
+            form.fields['answer'].initial = question.answer
 
 
     return render(request, 'make_true_false_question.html', {'form': form})
@@ -116,17 +133,20 @@ def get_question(request, id):
 @require_POST
 def make_test(request):
 
+    # TODO: check for no questions sent in
+    # JavaScript is sending in an array of question IDs and name of test
     q_ids = json.loads(request.POST.get('questions'))
     name = request.POST.get('name')
 
+    # get questions user selected by ID
     questions = QuestionModel.objects.filter(id__in=q_ids)
 
-    # error says ID is not getting set, but it saves into the DB with a value
-    # and auto populate is set to true on id
-
+    # create test model, save, associate questions, save  <-- needs to be done in this order, how Django works i guess
     test = TestModel(name=name)
     test.save()
     test.question.set(questions)
     test.save()
 
-    return HttpResponse('Success')
+    # go back to create home
+    return HttpResponse()
+
