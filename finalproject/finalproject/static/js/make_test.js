@@ -119,8 +119,8 @@ function createTest(csrf) {
             'questions': JSON.stringify(questions),
             'name': $('#test-name').val()
         },
-        success: function f(data) {
-            console.log(data);
+        success: function f() {
+            console.log('Success!');
         }
     });
 

@@ -58,7 +58,7 @@ class MakeTestForm(forms.ModelForm):
         super(MakeTestForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = models.Test
+        model = models.TestModel
         fields = ['question']
 
 

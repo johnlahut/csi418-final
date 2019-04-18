@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core import serializers
 
 from .forms import MakeMultipleChoiceQuestionForm, MakeTrueFalseQuestionForm, MakeTestForm
-from .models import QuestionModel, QuestionCategory, Test
+from .models import QuestionModel, QuestionCategory, TestModel
 
 import json
 
@@ -83,7 +83,7 @@ def delete_popup(request, id):
 
 def make_home_view(request):
 
-    t = Test.objects.all()
+    t = TestModel.objects.all()
 
     q = QuestionModel.objects.all()
 
@@ -124,7 +124,7 @@ def make_test(request):
     # error says ID is not getting set, but it saves into the DB with a value
     # and auto populate is set to true on id
 
-    test = Test(name=name)
+    test = TestModel(name=name)
     test.save()
     test.question.set(questions)
     test.save()

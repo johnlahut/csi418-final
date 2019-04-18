@@ -6,7 +6,7 @@ from django.db import models
 
 class QuestionCategory(models.Model):
 
-    id = models.IntegerField(primary_key=True, auto_created=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=256)
 
     def __str__(self):
@@ -15,7 +15,7 @@ class QuestionCategory(models.Model):
 
 class QuestionModel(models.Model):
 
-    id = models.IntegerField(primary_key=True, auto_created=True)
+    id = models.AutoField(primary_key=True)
     question = models.CharField(max_length=256)
     answer = models.IntegerField()
     choice_1 = models.CharField(max_length=256, default='True')
@@ -31,9 +31,8 @@ class QuestionModel(models.Model):
         return self.question
 
 
-class Test(models.Model):
-
-    id = models.IntegerField(primary_key=True, auto_created=True)
+class TestModel(models.Model):
+    id = models.AutoField(primary_key=True)
     question = models.ManyToManyField(QuestionModel)
     createdDate = models.DateField(auto_now_add=True)
     name = models.CharField(max_length=256, default=None)
