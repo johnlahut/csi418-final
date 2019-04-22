@@ -22,8 +22,13 @@
                                 <a href="{% url 'maker:true_false' %}" class="btn btn-primary" role="button">Create True False
                                     Question</a>
                             </div>
-                            <div class="ml-2 align-middle">
-                                <a href="{% url 'maker:test_maker' %}" class="btn btn-dark-green" role="button" style="margin-top: 33px;">Create Test</a>
+                            <div class="btn-group-vertical">
+                                <div class="ml-2 align-middle">
+                                    <a href="{% url 'maker:upload'%}" class="btn btn-success" role="button">Upload Questions</a>
+                                </div>
+                                <div class="ml-2 align-middle">
+                                    <a href="{% url 'maker:test_maker' %}" class="btn btn-success" role="button">Create Test</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -37,9 +42,9 @@
                 <table class="table table-bordered table-sm">
                     <thead>
                     <tr>
-                        <th class="text-center" scope="col">#ID</th>
                         <th class="text-center" scope="col">Question Title</th>
-                        <th class="text-center" scope="col">Answer #ID</th>
+                        <th class="text-center" scope="col">Answer</th>
+                        <th class="text-center" scope="col">Category</th>
                         <th class="text-center" scope="col">Type</th>
                         <th class="text-center" scope="col" colspan="2">Actions</th>
                     </tr>
@@ -48,9 +53,9 @@
                     {% if q %}
                         {% for question in q %}
                             <tr>
-                                <td class="pt-3-half align-middle text-center">{{ question.id }}</td>
                                 <td class="pt-3-half align-middle text-center">{{ question.question }}</td>
-                                <td class="pt-3-half align-middle text-center">{{ question.answer }}</td>
+                                <td class="pt-3-half align-middle text-center">{{ question.answer_text }}</td>
+                                <td class="pt-3-half align-middle text-center">{{ question.category.name }}</td>
 
                                 <!-- if choice 3 is none then we know its a true false question -->
                                 {% if question.choice_3 == None %}
@@ -70,6 +75,7 @@
                                     <button type="button" data-toggle="modal" data-target="#delete_question_popup"
                                             data-id={{ question.id }} class="btn btn-outline-danger btn-sm" onclick="deleteButton('{{ question.id }}', '{% url 'maker:delete_question' id=0 %}')">Delete</button>
                                 </td>
+
                             </tr>
                         {% endfor %}
                     {% endif %}

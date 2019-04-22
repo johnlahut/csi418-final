@@ -1,0 +1,3 @@
+1, Where is the tallest building?, 1, USA, 2, France, *3, China, 4, Russia, an image path
+2, Where is the tallest building?, A, USA, *B, France, C, China, D, Russia, an image path
+3, Where is the tallest building?, a, USA, b, France, c, China, d, Russia, an image path

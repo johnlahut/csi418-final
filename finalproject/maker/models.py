@@ -18,6 +18,7 @@ class QuestionModel(models.Model):
     id = models.AutoField(primary_key=True)
     question = models.CharField(max_length=256)
     answer = models.IntegerField()
+    answer_text = models.CharField(max_length=256, default='')
     choice_1 = models.CharField(max_length=256, default='True')
     choice_2 = models.CharField(max_length=256, default='False')
     choice_3 = models.CharField(max_length=256, null=True, default=None)

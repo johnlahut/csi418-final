@@ -2,12 +2,13 @@ from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core import serializers
+from io import StringIO
 
-from .forms import MakeMultipleChoiceQuestionForm, MakeTrueFalseQuestionForm, MakeTestForm
+from .forms import MakeMultipleChoiceQuestionForm, MakeTrueFalseQuestionForm, UploadForm
 from .models import QuestionModel, QuestionCategory, TestModel
 
 import json
-
+import csv
 # Create your views here.
 
 
@@ -28,6 +29,7 @@ def make_mulitple_choice_question_view(request, id=None):
             cd = form.cleaned_data
             question = form.save(commit=False)
             question.answer = int(cd['answer'])
+            question.answer_text = cd[f'choice_{question.answer}']
             question.save()
 
             return HttpResponseRedirect(reverse('maker:home'))
@@ -47,9 +49,12 @@ def make_mulitple_choice_question_view(request, id=None):
             form.fields['choice_4'].initial = question.choice_4
             form.fields['choice_5'].initial = question.choice_5
             form.fields['choice_6'].initial = question.choice_6
+            form.fields['category'].initial = question.category_id
 
+    if id: edit=True
+    else: edit=False
 
-    return render(request, 'make_multiple_choice_question.html', {'form': form})
+    return render(request, 'make_multiple_choice_question.html', {'form': form, 'edit': edit})
 
 
 def make_true_false_question_view(request, id=None):
@@ -67,6 +72,10 @@ def make_true_false_question_view(request, id=None):
             cd = form.cleaned_data
             question = form.save(commit=False)
             question.answer = int(cd['answer'])
+            if question.answer == 1:
+                question.answer_text = 'True'
+            else:
+                question.answer_text = 'False'
             question.save()
 
             return HttpResponseRedirect(reverse('maker:home'))
@@ -80,8 +89,11 @@ def make_true_false_question_view(request, id=None):
             form.fields['question'].initial = question.question
             form.fields['answer'].initial = question.answer
 
+    if id: edit=True
+    else: edit=False
 
-    return render(request, 'make_true_false_question.html', {'form': form})
+
+    return render(request, 'make_true_false_question.html', {'form': form, 'edit': edit})
 
 
 def delete_question(request, id):
@@ -148,4 +160,65 @@ def make_test(request):
 
     # go back to create home
     return HttpResponse()
+
+
+def upload(request, filename='sample.csv'):
+
+
+    if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)
+
+        if form.is_valid():
+
+            bad = []
+
+            answer_map = {
+                'A': 1,
+                'B': 2,
+                'C': 3,
+                'D': 4
+            }
+
+            f = request.FILES['file'].read().decode('utf-8')
+            reader = csv.reader(StringIO(f), delimiter=',')
+
+            for row in reader:
+                row = [s.strip() for s in row]
+
+                if len(row) < 10 or len(row) > 11:
+                    bad.append(row)
+                    continue
+
+                try:
+                    answer = [index for index, string in enumerate(row) if '*' in string][0]
+                except IndexError:
+                    bad.append(row)
+                    continue
+
+
+                q = QuestionModel()
+
+                q.question = row[1]
+                q.choice_1 = row[3]
+                q.choice_2 = row[5]
+                q.choice_3 = row[7]
+                q.choice_4 = row[9]
+                q.image = row[10]
+
+                row[answer] = row[answer].replace('*', '').upper()
+
+                if row[answer].upper() in answer_map:
+                    q.answer = answer_map[row[answer]]
+                    q.answer_text = row[answer+1]
+                else:
+                    q.answer = int(row[answer])
+                    q.answer_text = row[answer+1]
+
+
+                q.save()
+            return render(request, 'upload.html', {'form': form, 'bad': bad, 'finished': True})
+        return render(request, 'upload.html', {'form': form, 'finished': False})
+    else:
+        form = UploadForm()
+        return render(request, 'upload.html', {'form': form})
 

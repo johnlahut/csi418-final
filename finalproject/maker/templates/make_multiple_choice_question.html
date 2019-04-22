@@ -4,121 +4,54 @@
 
 {% block content %}
 
-<div class="col-10 mt-3">
+    <div class="col-10 mt-3">
 
 
+        {% include 'snippets/error_snippet.html' %}
 
-{% if form.errors %}
-    {% for error in form.errors %}
-        {{ error }}
-    {% endfor %}
-{% endif %}
-
-{#{{ form.answer.value }}#}
-{##}
-{#{% for k in form.answer %}#}
-{#    {{ k }}#}
-{#{% endfor %}#}
-
-<form action="." method="post">
-    {% csrf_token %}
-    <div class="form-group">
-        <div class="col-8 offset-1">
-            <h3 class="mb-5">Multiple Choice Question</h3>
-        </div>
-        <!-- Question Title -->
-        <div class="col-8 mx-auto">
-            <textarea class="form-control mb-3" rows="2" id="{{ form.question.id_for_label }}" name="{{ form.question.name }}" placeholder="Question Text" required>{{ form.question.value|default_if_none:"" }}</textarea>
-        </div>
-        <div class="col-8 mx-auto">
-            <div class="row">
-                <!-- Upload Image Field -->
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Upload Figure</span>
+        <form action="." method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="col-8 offset-1">
+                    <h3 class="mb-5">Multiple Choice Question</h3>
+                </div>
+                <!-- Question Title -->
+                <div class="col-8 mx-auto">
+                    {% include 'snippets/question_text_snippet.html' %}
+                </div>
+                <div class="col-8 mx-auto">
+                    <div class="row">
+                        <!-- Upload Image Field -->
+                        <div class="col">
+                            {% include 'snippets/image_snippet.html' %}
                         </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="{{ form.image.id_for_label }}" accept="image/*">
-                            <label class="custom-file-label" for="{{ form.image.id_for_label }}">Choose image...</label>
+
+                        <!-- Subject Choice Field -->
+                        <div class="col">
+                            {% include 'snippets/select_snippet.html' %}
                         </div>
                     </div>
                 </div>
 
-                <!-- Subject Choice Field -->
-                <div class="col">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Choose Subject</span>
-                        </div>
-                        <select class="custom-select" name="{{ form.category.name }}" id="{{ form.category.id_for_label }}">
-                            {% for value, name in form.fields.category.choices %}
-                                <option value="{{ value }}">{{ name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <div class="col-10 mx-auto">
+                    <!-- loop though answers to render with bootstrap styling -->
+                    {% include 'snippets/mc_answer_snippet.html' %}
                 </div>
+
+
+                <!-- Create question button -->
+                {% include 'snippets/submit_snippet.html' %}
             </div>
+
+        </form>
+
+        <!-- Page navigation -->
+        <div class="col-8 mx-auto">
+            <a href="{% url 'maker:home' %}" class="btn btn-primary" role="button">&larr;</a>
+            <a href="{% url 'maker:multiple_choice_preview' %}" class="btn btn-primary" role="button">Preview</a>
         </div>
 
-        <div class="col-10 mx-auto">
-        <!-- loop though answers to render with bootstrap styling -->
-            {% for a in form.answer %}
-
-                <!-- Render answers as groups of 2 -->
-                {% if forloop.counter0|divisibleby:2 %}
-                    <div class="row mb-3">
-                {% endif %}
-
-                <!-- Create radio button and text field for each possible answer -->
-                    <div class="col">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-
-                                    <!-- The first four are always required -->
-                                    <!-- Radio button -->
-                                    {% if forloop.counter <= 4 %}
-{#                                        {% if forloop.counter == form.answer.value %}#}
-                                        <input type="radio" name="{{ form.answer.name }}" id="{{ a.id_for_label }}" value="{{ forloop.counter }}" required>
-                                    {% else %}
-                                        <input type="radio" name="{{ form.answer.name }}" id="{{ a.id_for_label }}" value="{{ forloop.counter }}">
-                                    {% endif %}
-                                </div>
-                            </div>
-
-                            <!-- The first four are always required -->
-                            <!-- Text field -->
-                            {% if forloop.counter <= 4 %}
-                                <input type="text" value="" class="form-control" placeholder="Answer text {{ forloop.counter }}" name="choice_{{ forloop.counter }}" id="id_choice_{{ forloop.counter }}" required>
-                            {% else %}
-                                <input type="text" class="form-control" placeholder="Answer text {{ forloop.counter }}" name="choice_{{ forloop.counter }}" id="id_choice_{{ forloop.counter }}">
-                            {% endif %}
-                        </div>
-                    </div>
-
-                {% if forloop.counter|divisibleby:2 %}
-                    </div>
-                {% endif %}
-            {% endfor %}
-        </div>
-            <!-- Create question button -->
-            <div class="col offset-9">
-                <button type="submit" class="btn btn-success">Create Question</button>
-            </div>
     </div>
-
-</form>
-
-<!-- Page navigation -->
-<div class="col-8 mx-auto">
-    <a href="{% url 'maker:home' %}" class="btn btn-primary" role="button">&larr;</a>
-    <a href="{% url 'maker:multiple_choice_preview' %}" class="btn btn-primary" role="button">Preview</a>
-</div>
-
-
-</div>
-
 
 
 {% endblock %}

@@ -1,0 +1,3 @@
+<textarea class="form-control mb-3" rows="2" id="{{ form.question.id_for_label }}"
+          name="{{ form.question.name }}" placeholder="Question Text"
+          required>{{ form.question.value|default_if_none:"" }}</textarea>

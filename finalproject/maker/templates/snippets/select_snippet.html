@@ -1,0 +1,16 @@
+<div class="input-group">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Choose Subject</span>
+    </div>
+
+    <select class="custom-select" name="{{ form.category.name }}" id="{{ form.category.id_for_label }}">
+        {% for value, name in form.fields.category.choices %}
+            {% if value == form.category.value %}
+                <option value="{{ value }}" selected>{{ name }}</option>
+            {% else %}
+                <option value="{{ value }}">{{ name }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+
+</div>

@@ -1,10 +1,21 @@
-{% extends 'base.html' %}
-{% block title %}
-    Home
-{% endblock %}
+		 {% extends 'base.html' %}
+ {% block title %}
+     Home
+ {% endblock %}
 
-{% block content %}
-    <h2>Welcome to SE Homepage</h2>
-    <a href="{% url 'maker:home' %}" class="btn btn-primary" role="button">Test Bank Home</a>
-{% endblock %}
+  {% block content %}
+     {% if user.is_authenticated %}
+         {% if user.is_superuser %}
+             <h2>Welcome to SE Homepage</h2>
+             <a href="{% url 'maker:home' %}" class="btn btn-primary" role="button">Test Bank Home</a>
+             <p><a href="{% url 'logout' %}">logout</a></p>
 
+          {% else %}
+             <h2>Welcome to the User Page</h2>
+             <p><a href="{% url 'logout' %}">logout</a></p>
+         {% endif %}
+     {% else %}
+         <p>You are not logged in</p>
+         <a href="{% url 'login' %}">login</a>
+     {% endif %}
+ {% endblock %}

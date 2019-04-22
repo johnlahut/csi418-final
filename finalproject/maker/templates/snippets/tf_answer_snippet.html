@@ -1,0 +1,21 @@
+<!-- Row 1 -->
+<div class="row mb-3">
+    {% for value, name in form.fields.answer.choices %}
+        <div class="col">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">
+                        <input type="radio" name="{{ form.answer.name }}" id="id_answer_{{ forloop.counter0 }}" value="{{ forloop.counter }}">
+                    </div>
+                </div>
+                <input type="text" value="{{ name }}" class="form-control" placeholder={{ name }}
+                   name="{{ form.choice_1.name }}" id="{{ form.choice_1.id_for_label }}" required disabled>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+    id = parseInt("{{ form.answer.value }}");
+    $(`#id_answer_${id-1}`).attr('checked', true);
+</script>

@@ -61,6 +61,9 @@ class MakeTestForm(forms.ModelForm):
         model = models.TestModel
         fields = ['question']
 
+class UploadForm(forms.Form):
+
+    file = forms.FileField(required=True)
 
 
 

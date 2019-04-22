@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Test Building Page
+{% endblock %}
+
+
+{% block content %}
+
+<form action="." method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-12">
+
+        {% include 'snippets/error_snippet.html' %}
+
+
+
+        <div class="row m-2">
+            <div class="col-8 mx-auto">
+                <h1 class="text-center mt-3"> Upload Questions</h1>
+
+                    {{ form.file }}
+
+{#                <div class="input-group mt-5 mb-3">#}
+{#                    <div class="input-group-prepend">#}
+{#                        <span class="input-group-text">Upload CSV File</span>#}
+{#                    </div>#}
+{#                    <div class="custom-file">#}
+{#                        <input type="file" class="custom-file-input" id="{{ form.file.id_for_label }}" accept="text/csv" required>#}
+{#                        <label class="custom-file-label" for="{{ form.file.id_for_label }}" name="{{ form.file.name }}">Choose csv...</label>#}
+{#                    </div>#}
+{#                </div>#}
+            </div>
+        </div>
+
+        <div class="row m-2">
+            <div class="col-8 mx-auto">
+
+                {% if finished %}
+                    {% if bad %}
+                        <h5 class="text-warning">The following lines encountered problems and were not added:</h5>
+                    {% endif %}
+                    <ul>
+                        {% for error in bad %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col offset-9">
+        <button type="submit" class="btn btn-success">Create Questions</button>
+    </div>
+
+    <!-- Page navigation -->
+    <div class="col-8 mx-auto">
+        <a href="{% url 'maker:home' %}" class="btn btn-primary" role="button">&larr;</a>
+    </div>
+
+
+</form>
+
+{% endblock %}

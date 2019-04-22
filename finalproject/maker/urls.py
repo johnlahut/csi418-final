@@ -29,4 +29,5 @@ urlpatterns = [
     path('test_maker/', views.make_test_view, name='test_maker'),
     path('get_question/<int:id>/', views.get_question, name='get_question'),
     path('make_test/', views.make_test, name='make_test'),
+    path('upload/', views.upload, name='upload')
 ]
