@@ -7,6 +7,8 @@
 {% block content %}
 
     <script src="{% static 'js/deleteModal.js' %}"></script>
+    <script src="{% static 'js/make_home.js' %}"></script>
+    <script src="{% static 'js/make_test.js' %}"></script>
 
     <div class="col-12">
 
@@ -39,7 +41,7 @@
         <div class="row m-2">
             <div class="col-8 mx-auto">
                 <h4> List of created questions: </h4>
-                <table class="table table-bordered table-sm">
+                <table id="questionTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                     <thead>
                     <tr>
                         <th class="text-center" scope="col">Question Title</th>
@@ -87,7 +89,7 @@
         <div class="row m-2">
             <div class="col-8 mx-auto">
                 <h4> List of created tests: </h4>
-                <table class="table table-bordered">
+                <table id="testTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                     <thead>
                     <tr>
                         <th class="text-center" scope="col">#ID</th>
@@ -105,10 +107,11 @@
                                     <a role="button" class="btn btn-sm btn-outline-success" href="#">View</a>
                                 </td>
                                 <td class="text-center align-middle">
-                                    <a role="button" class="btn btn-sm btn-outline-primary" href="#">Edit</a>
+
+                                    <a role="button" class="btn btn-sm btn-outline-primary" href="{% url 'maker:edit_test' id=test.id %}">Edit</a>
                                 </td>
                                 <td class="text-center align-middle">
-                                    <a role="button" class="btn btn-sm btn-outline-danger" href="#">Delete</a>
+                                    <a role="button" class="btn btn-sm btn-outline-danger" href ="#">Delete</a>
                                 </td>
                             </tr>
                         {% endfor %}

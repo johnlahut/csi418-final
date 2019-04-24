@@ -1,6 +1,6 @@
-from django.views.decorators.http import require_GET, require_POST
-from django.shortcuts import render, reverse, redirect
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.views.decorators.http import require_GET, require_POST
+from django.shortcuts import render, reverse
 from django.core import serializers
 from io import StringIO
 
@@ -130,6 +130,7 @@ def make_test_view(request):
 
     return render(request, 'make_test.html', {'q': q})
 
+
 @require_GET
 def get_question(request, id):
     # serialize requires iterator even though get returns a single object always
@@ -140,6 +141,7 @@ def get_question(request, id):
     q['fields']['category'] = QuestionCategory.objects.get(id=q['fields']['category']).name
     q['fields']['id'] = q['pk']
     return JsonResponse(q['fields'])
+
 
 @require_POST
 def make_test(request):
@@ -162,7 +164,7 @@ def make_test(request):
     return HttpResponse()
 
 
-def upload(request, filename='sample.csv'):
+def upload(request):
 
 
     if request.method == 'POST':
@@ -221,4 +223,14 @@ def upload(request, filename='sample.csv'):
     else:
         form = UploadForm()
         return render(request, 'upload.html', {'form': form})
+
+
+@require_GET
+def edit_test_view(request, id):
+
+    q = TestModel.objects.get(id=id).question.all()
+    d = json.loads(serializers.serialize('json', q))
+    return JsonResponse(d, safe=False)
+
+
 

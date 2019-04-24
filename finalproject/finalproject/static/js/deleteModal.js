@@ -11,7 +11,4 @@ function deleteButton(questionID, url){
     $("idkl").val( ids );
     $('#myModal').modal('show');
     $('#finalDelete').attr('href', url.replace('0', questionID));
-
-
-
 };
