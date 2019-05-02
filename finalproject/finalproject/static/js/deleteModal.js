@@ -12,3 +12,12 @@ function deleteButton(questionID, url){
     $('#myModal').modal('show');
     $('#finalDelete').attr('href', url.replace('0', questionID));
 };
+
+function deleteTestButton(testID, url){
+    console.log(testID);
+    console.log(url);
+    var ids = $(this).attr('data-id');
+    $("idkl").val( ids );
+    $('#myModal').modal('show');
+    $('#finalDelete').attr('href', url.replace('0', testID));
+};
