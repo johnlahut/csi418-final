@@ -66,4 +66,13 @@ class UploadForm(forms.Form):
     file = forms.FileField(required=True)
 
 
+class TakeTestForm(forms.ModelForm):
+
+    class Meta:
+        model = models.TestModel
+        exclude = []
+
+
+
+
 

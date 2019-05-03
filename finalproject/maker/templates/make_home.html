@@ -104,11 +104,11 @@
                                 <td class="text-center align-middle">{{ test.id }}</td>
                                 <td class="text-center align-middle">{{ test.name }}</td>
                                 <td class="text-center align-middle">
-                                    <a role="button" class="btn btn-sm btn-outline-success" href="#">View</a>
+                                    <a role="button" class="btn btn-sm btn-outline-success" href="{% url 'maker:take_test_view' id=test.id %}">View</a>
                                 </td>
                                 <td class="text-center align-middle">
 
-                                    <a role="button" class="btn btn-sm btn-outline-primary" href="{% url 'maker:edit_test' id=test.id %}">Edit</a>
+                                    <a role="button" class="btn btn-sm btn-outline-primary" href="#">Edit</a>
                                 </td>
                                 <td class="text-center align-middle">
                                     <a role="button" class="btn btn-sm btn-outline-danger" href ="#">Delete</a>

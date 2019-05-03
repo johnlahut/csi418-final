@@ -1,5 +1,6 @@
 # Create your models here.
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -40,5 +41,18 @@ class TestModel(models.Model):
 
     def __str__(self):
         return self.name
+
+class GradedQuestionModel(models.Model):
+    id = models.AutoField(primary_key=True)
+    question = models.ForeignKey(QuestionModel, on_delete=models.CASCADE)
+    correct = models.BooleanField()
+
+
+class GradedTestModel(models.Model):
+    id = models.AutoField(primary_key=True)
+    test = models.ForeignKey(TestModel, default=1, on_delete=models.CASCADE)
+    score = models.FloatField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    questions = models.ManyToManyField(GradedQuestionModel)
 
 

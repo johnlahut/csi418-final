@@ -73,11 +73,11 @@ function renderQuestion(data) {
         <div class="custom-control custom-radio">
             <div class="row">
                 <div class="col-6">
-                    <input class="custom-control-input" type="radio" id="choice_1">
+                    <input class="custom-control-input" type="radio" id="choice_1" disabled>
                     <label class="custom-control-label" for="choice_1">${data['choice_1']}</label>
                 </div>
                 <div class="col-6">
-                    <input class="custom-control-input" type="radio" id="choice_2">
+                    <input class="custom-control-input" type="radio" id="choice_2" disabled>
                     <label class="custom-control-label" for="choice_2">${data['choice_2']}</label>
                 </div>
             </div>
@@ -85,12 +85,12 @@ function renderQuestion(data) {
         
             <div class="row">
                 <div class="col-6">
-                    <input class="custom-control-input" type="radio" id="choice_3">
+                    <input class="custom-control-input" type="radio" id="choice_3" disabled>
                     <label class="custom-control-label" for="choice_3">${data['choice_3']}</label>
                 </div>
         
                 <div class="col-6">
-                    <input class="custom-control-input" type="radio" id="choice_4">
+                    <input class="custom-control-input" type="radio" id="choice_4" disabled>
                     <label class="custom-control-label" for="choice_4">${data['choice_4']}</label>
                 </div>
             </div>

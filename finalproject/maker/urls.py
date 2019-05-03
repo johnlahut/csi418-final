@@ -30,5 +30,7 @@ urlpatterns = [
     path('get_question/<int:id>/', views.get_question, name='get_question'),
     path('make_test/', views.make_test, name='make_test'),
     path('upload/', views.upload, name='upload'),
-    path('edit_test/<int:id>/', views.edit_test_view, name='edit_test')
+    path('take_test_view/<int:id>/', views.take_test_view, name='take_test_view'),
+    path('user_home/', views.user_home_view, name='user_home_view'),
+    path('view_test/', views.view_test_view, name='view_test_view')
 ]

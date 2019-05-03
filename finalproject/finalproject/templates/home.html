@@ -16,7 +16,7 @@
             <h2>Welcome to the User Page</h2>
             <p><a href="{% url 'logout' %}">logout</a></p>
             {{ user.user_group }}
-            <a href="{% url 'maker:home' %}" class="btn btn-primary" role="button">Test Bank Home</a>
+            <a href="{% url 'maker:user_home_view' %}" class="btn btn-primary" role="button">User Home</a>
 
         {% endif %}
 

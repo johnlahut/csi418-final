@@ -1,11 +1,11 @@
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from django.core import serializers
 from io import StringIO
 
 from .forms import MakeMultipleChoiceQuestionForm, MakeTrueFalseQuestionForm, UploadForm
-from .models import QuestionModel, QuestionCategory, TestModel
+from .models import QuestionModel, QuestionCategory, TestModel, GradedTestModel, GradedQuestionModel
 
 import json
 import csv
@@ -142,7 +142,6 @@ def get_question(request, id):
     q['fields']['id'] = q['pk']
     return JsonResponse(q['fields'])
 
-
 @require_POST
 def make_test(request):
 
@@ -225,12 +224,59 @@ def upload(request):
         return render(request, 'upload.html', {'form': form})
 
 
-@require_GET
-def edit_test_view(request, id):
+def take_test_view(request, id):
 
     q = TestModel.objects.get(id=id).question.all()
-    d = json.loads(serializers.serialize('json', q))
-    return JsonResponse(d, safe=False)
+    t = TestModel.objects.get(id=id)
 
+    q_json = serializers.serialize('json', q)
+    t_json = serializers.serialize('json', [t])
+
+
+    if request.method == 'GET':
+
+        return render(request, 'edit_test.html', {'q': q_json, 't': t_json})
+
+    else:
+
+        answers = json.loads(request.POST['answerData'])
+        graded = GradedTestModel(user=request.user, test=t, score=0.0)
+        graded.save()
+
+        total = float(len(answers.keys()))
+        correct = 0
+
+        for id, answer in answers.items():
+            question = q.get(id=id)
+            graded_question = GradedQuestionModel(question=question)
+            if q.get(id=id).answer == answer:
+                graded_question.correct = True
+                correct += 1
+            else:
+                graded_question.correct = False
+
+            graded_question.save()
+            graded.questions.add(graded_question)
+        graded.score = (correct/total)*100
+        graded.save()
+
+        return redirect(reverse('maker:user_home_view'))
+
+@require_GET
+def view_test_view(request, id):
+
+    q = TestModel.objects.get(id=id).question.all()
+    t = TestModel.objects.get(id=id)
+
+    q_json = serializers.serialize('json', q)
+    t_json = serializers.serialize('json', [t])
+
+def user_home_view(request):
+
+    taken = GradedTestModel.objects.filter(user=request.user)
+    taken_ids = [t.test_id for t in taken]
+    t = TestModel.objects.all().exclude(id__in=taken_ids)
+
+    return render(request, 'user_home.html', {'t': t, 'taken': taken})
 
 

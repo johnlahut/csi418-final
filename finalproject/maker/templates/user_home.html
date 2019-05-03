@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %} Question Bank Home {% endblock %}
+
+{% block content %}
+
+    <div class="row m-2">
+        <div class="col-8 mx-auto">
+            <h4> List of available tests: </h4>
+            <table id="testTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="text-center" scope="col">Test Title</th>
+                    <th class="text-center" scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if t %}
+                    {% for test in t %}
+                        <tr>
+                            <td class="text-center align-middle">{{ test.name }}</td>
+                            <td class="text-center align-middle">
+                                <a role="button" class="btn btn-sm btn-outline-success"
+                                   href="{% url 'maker:take_test_view' id=test.id %}">Take Exam</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row m-2">
+        <div class="col-8 mx-auto">
+            <h4> List of taken tests: </h4>
+            <table id="testTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="text-center" scope="col">Test Title</th>
+                    <th class="text-center" scope="col">Score</th>
+                    <th class="text-center" scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if taken %}
+                    {% for test in taken %}
+                        <tr>
+                            <td class="text-center align-middle">{{ test.test.name }}</td>
+                            <td class="text-center align-middle">{{ test.score|floatformat:-2 }}%</td>
+                            <td class="text-center align-middle">
+                                <a role="button" class="btn btn-sm btn-outline-success"
+                                   href="{% url 'maker:take_test_view' id=test.id %}">View</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
