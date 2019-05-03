@@ -109,6 +109,19 @@ def delete_popup(request, id):
 
     return render(request, 'delete_popup.html', {'q': q})
 
+def delete_test(request, id):
+
+    t = TestModel.objects.get(id=id)
+    t.delete()
+    return HttpResponseRedirect(reverse('maker:home'))
+
+
+def delete_test_popup(request, id):
+
+    t = TestModel.objects.get(id=id)
+
+    return render(request, 'delete_popup.html', {'t': t})
+
 
 def make_home_view(request):
 

@@ -26,6 +26,7 @@ urlpatterns = [
     path('tf/<int:id>/', views.make_true_false_question_view, name='true_false_edit'),
     path('preview/', views.multiple_choice_preview_view, name='multiple_choice_preview'),
     path('delete/<int:id>/', views.delete_question, name='delete_question'),
+    path('delete_test/<int:id>/', views.delete_test, name='delete_test'),
     path('test_maker/', views.make_test_view, name='test_maker'),
     path('get_question/<int:id>/', views.get_question, name='get_question'),
     path('make_test/', views.make_test, name='make_test'),
