@@ -5,24 +5,28 @@
 
 {% block content %}
 
-    {% if user.is_authenticated %}
 
-        {% if user.is_superuser %}
-            <h2>Welcome to SE Homepage</h2>
-            <a href="{% url 'maker:home' %}" class="btn btn-primary" role="button">Test Bank Home</a>
-            <p><a href="{% url 'logout' %}">logout</a></p>
+    <div class="col-10 mx-auto mt-5">
+
+        <h2>Welcome to WackBoard!</h2>
+        {% if user.is_authenticated %}
+
+            {% if user.is_superuser %}
+                <p class="text-muted">You are logged in as a privilaged user.</p>
+                <a href="{% url 'maker:home' %}" class="btn btn-primary" role="button">Test Bank Home</a>
+                <a class="btn btn-outline-success" href="{% url 'admin:index' %}">Create Users</a><br>
+
+            {% else %}
+                <p class="text-muted">You are logged in as a student.</p>
+                <a href="{% url 'maker:user_home_view' %}" class="btn btn-primary" role="button">View my Exams</a>
+            {% endif %}
+
+            <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a><br>
 
         {% else %}
-            <h2>Welcome to the User Page</h2>
-            <p><a href="{% url 'logout' %}">logout</a></p>
-            {{ user.user_group }}
-            <a href="{% url 'maker:user_home_view' %}" class="btn btn-primary" role="button">User Home</a>
+            <h5 class="text-warning">Please login to continue. If you are a student, your administrator should provide you with a username and password.</h5>
+            <a  class="btn btn-success" href="{% url 'login' %}">login</a>
 
         {% endif %}
-
-    {% else %}
-        <p>You are not logged in</p>
-        <a href="{% url 'login' %}">login</a>
-
-    {% endif %}
+    </div>
 {% endblock %}
