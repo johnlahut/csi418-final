@@ -53,14 +53,18 @@
                             <td class="text-center align-middle">{{ test.score|floatformat:-2 }}%</td>
                             <td class="text-center align-middle">
                                 <a role="button" class="btn btn-sm btn-outline-success"
-                                   href="{% url 'maker:take_test_view' id=test.id %}">View</a>
+                                   href="{% url 'maker:view_test_view' id=test.test.id %}">View</a>
                             </td>
                         </tr>
                     {% endfor %}
                 {% endif %}
                 </tbody>
             </table>
+
+        <a href="{% url 'home' %}" class="btn btn-primary" role="button">&larr; Back</a>
         </div>
     </div>
+
+
 
 {% endblock %}

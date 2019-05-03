@@ -73,8 +73,4 @@ function bindAnswers() {
     console.log(data);
 
     $('#answerData').val(JSON.stringify(answers));
-
-    // $('#test').append(
-    //     `<input type="text" value="${JSON.stringify(answers)}" id="mydat">`
-    // );
 }

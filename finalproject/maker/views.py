@@ -235,7 +235,7 @@ def take_test_view(request, id):
 
     if request.method == 'GET':
 
-        return render(request, 'edit_test.html', {'q': q_json, 't': t_json})
+        return render(request, 'take_test.html', {'q': q_json, 't': t_json})
 
     else:
 
@@ -266,10 +266,13 @@ def take_test_view(request, id):
 def view_test_view(request, id):
 
     q = TestModel.objects.get(id=id).question.all()
-    t = TestModel.objects.get(id=id)
+    t = GradedTestModel.objects.get(test=TestModel.objects.get(id=id))
+
 
     q_json = serializers.serialize('json', q)
     t_json = serializers.serialize('json', [t])
+
+    return render(request, 'view_test.html', {'q': q_json, 't': t_json})
 
 def user_home_view(request):
 

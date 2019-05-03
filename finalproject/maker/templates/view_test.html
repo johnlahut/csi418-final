@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-<script src="{% static 'js/edit_test.js' %}"></script>
+<script src="{% static 'js/view_test.js' %}"></script>
 <form action="." method="post" onsubmit="bindAnswers();">
     {% csrf_token %}
 
@@ -19,7 +19,7 @@
     </div>
     <div class="col-10 mx-auto">
         <div class="ml-5 mt-5">
-            <button type="submit" class="btn btn-success">Submit Test</button>
+            <a href="{% url 'maker:user_home_view' %}" class="btn btn-primary" role="button">&larr; Back</a>
         </div>
     </div>
 

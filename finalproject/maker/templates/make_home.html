@@ -92,7 +92,6 @@
                 <table id="testTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th class="text-center" scope="col">#ID</th>
                         <th class="text-center" scope="col">Test Title</th>
                         <th class="text-center" scope="col" colspan="3">Actions</th>
                     </tr>
@@ -101,10 +100,9 @@
                     {% if t %}
                         {% for test in t %}
                             <tr>
-                                <td class="text-center align-middle">{{ test.id }}</td>
                                 <td class="text-center align-middle">{{ test.name }}</td>
                                 <td class="text-center align-middle">
-                                    <a role="button" class="btn btn-sm btn-outline-success" href="{% url 'maker:take_test_view' id=test.id %}">View</a>
+                                    <a role="button" class="btn btn-sm btn-outline-success" href="#">View</a>
                                 </td>
                                 <td class="text-center align-middle">
 

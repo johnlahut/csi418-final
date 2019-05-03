@@ -32,5 +32,5 @@ urlpatterns = [
     path('upload/', views.upload, name='upload'),
     path('take_test_view/<int:id>/', views.take_test_view, name='take_test_view'),
     path('user_home/', views.user_home_view, name='user_home_view'),
-    path('view_test/', views.view_test_view, name='view_test_view')
+    path('view_test/<int:id>/', views.view_test_view, name='view_test_view')
 ]
